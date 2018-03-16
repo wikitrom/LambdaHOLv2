@@ -374,14 +374,11 @@ public class A_Lambdas {
 		// exercise ->
 
 		// First try, works but it is not a lambda!!
-		//
-		System.out.println("First try, works but it is not a lambda!!");
 		Runnable r1 = new Runnable() {
 
 			@Override
 			public void run() {
 				sb.append(suffix);
-				System.out.println("Appending in " + Thread.currentThread().getName());
 			}
 		};
 
@@ -396,8 +393,6 @@ public class A_Lambdas {
 		// 2nd try, what is asked for in this exercise
 		// This is possible since the run() method is the only method by default in a
 		// Runnable class. Thus it follow the pattern for a lambda interface class.
-
-		System.out.println("2nd try, what is asked for in this exercise");
 		Runnable r = () -> sb.append(suffix);
 
 		// <-
@@ -414,9 +409,16 @@ public class A_Lambdas {
 	 * string argument doesn't occur.
 	 */
 	@Test
-	@Ignore
 	public void g_boundMethodRef1() {
-		Function<String, Integer> func = null; // TODO
+		// exercise ->
+
+		// first try, cheating ???
+		// String base = "abcdefghij";
+		// Function<String, Integer> func = s -> base.indexOf(s);
+
+		// 2nd try
+		Function<String, Integer> func = s -> "abcdefghij".indexOf(s);
+		// <-
 
 		assertEquals(2, func.apply("cde").intValue());
 		assertEquals(4, func.apply("efg").intValue());
@@ -440,9 +442,10 @@ public class A_Lambdas {
 	 * the left-hand side of the :: operator.
 	 */
 	@Test
-	@Ignore
 	public void g_boundMethodRef2() {
-		Function<String, Integer> func = null; // TODO
+		// exercise ->
+		Function<String, Integer> func = "abcdefghij"::indexOf;
+		// <-
 
 		assertEquals(2, func.apply("cde").intValue());
 		assertEquals(4, func.apply("efg").intValue());
