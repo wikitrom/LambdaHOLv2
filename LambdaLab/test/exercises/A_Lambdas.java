@@ -343,7 +343,7 @@ public class A_Lambdas {
 	@Test
 	public void e_bifunction3() {
 		// exercise ->
-		BiFunction<String, String, Integer> bifunc = String::indexOf;
+		BiFunction<String, String, Integer> bifunc = String::indexOf; // TODO: How does this work, 2 arguments
 		// <-
 
 		assertEquals(3, bifunc.apply("abcdefghij", "def").intValue());
@@ -367,13 +367,39 @@ public class A_Lambdas {
 	 * the sb variable (a StringBuilder).
 	 */
 	@Test
-	@Ignore
 	public void f_runnable1() {
 		StringBuilder sb = new StringBuilder("abc");
 		String suffix = "xyz";
 
 		// exercise ->
-		Runnable r = null; // TODO
+
+		// First try, works but it is not a lambda!!
+		//
+		System.out.println("First try, works but it is not a lambda!!");
+		Runnable r1 = new Runnable() {
+
+			@Override
+			public void run() {
+				sb.append(suffix);
+				System.out.println("Appending in " + Thread.currentThread().getName());
+			}
+		};
+
+		r1.run();
+		r1.run();
+		r1.run();
+		assertEquals("abcxyzxyzxyz", sb.toString());
+
+		// reset sb to "abc"
+		sb.setLength(3);
+
+		// 2nd try, what is asked for in this exercise
+		// This is possible since the run() method is the only method by default in a
+		// Runnable class. Thus it follow the pattern for a lambda interface class.
+
+		System.out.println("2nd try, what is asked for in this exercise");
+		Runnable r = () -> sb.append(suffix);
+
 		// <-
 
 		r.run();
